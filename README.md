@@ -67,6 +67,34 @@ Along with the normal capabilities you would expect for a calendar integration y
    - Ensure the file contains credentials for a "Desktop app".
    - Alternatively, copy the provided template file: `cp gcp-oauth.keys.example.json gcp-oauth.keys.json` and populate it with your credentials from the Google Cloud Console.
 
+## Configuration
+
+### Default Calendar
+
+By default, all calendar operations use your primary calendar. You can specify a different default calendar by setting the `GOOGLE_CALENDAR_ID` environment variable.
+
+The server intelligently resolves calendar identifiers, so you can use:
+- Calendar names (e.g., "Work", "Personal") - partial matches supported
+- Calendar IDs (e.g., "primary", "work@example.com")
+- The server will automatically find the matching calendar ID
+
+1. Copy the example environment file:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Edit `.env` and set your preferred calendar ID:
+   ```bash
+   GOOGLE_CALENDAR_ID=work@example.com
+   ```
+
+3. Use `./start.sh` to run the server with environment variables, or set the variable before running:
+   ```bash
+   GOOGLE_CALENDAR_ID=work@example.com npm start
+   ```
+
+To find your calendar IDs, use the `list-calendars` tool after authentication.
+
 ## Available Scripts
 
 - `npm run build` - Build the TypeScript code (compiles `src` to `build`)

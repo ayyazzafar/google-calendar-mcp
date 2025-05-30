@@ -53,8 +53,9 @@ export class UpdateEventHandler extends BaseToolHandler {
             if (args.reminders !== undefined) requestBody.reminders = args.reminders;
             if (args.recurrence !== undefined) requestBody.recurrence = args.recurrence;
 
+            const resolvedCalendarId = await this.resolveCalendarIdentifier(args.calendarId, client);
             const response = await calendar.events.patch({
-                calendarId: args.calendarId,
+                calendarId: resolvedCalendarId,
                 eventId: args.eventId,
                 requestBody: requestBody,
             });

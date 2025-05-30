@@ -19,6 +19,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Model Context Protocol (MCP) server for Google Calendar integration, built with TypeScript and the MCP SDK.
 
+### Configuration
+
+- Default calendar ID can be set via `GOOGLE_CALENDAR_ID` environment variable (defaults to 'primary')
+- Use `.env` file with `./start.sh` or set environment variable directly
+- Calendar resolution supports both IDs and names (e.g., "Work", "Personal", "primary")
+- Partial name matching is supported for calendar selection
+
 ### Key Components
 
 1. **MCP Server** (`src/index.ts`): Main entry point that initializes the MCP server, handles authentication, and routes tool requests.

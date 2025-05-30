@@ -2,7 +2,7 @@ import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { OAuth2Client } from "google-auth-library";
 import { CreateEventArgumentsSchema } from "../../schemas/validators.js";
 import { BaseToolHandler } from "./BaseToolHandler.js";
-import { calendar_v3, google } from 'googleapis';
+import { calendar_v3 } from 'googleapis';
 import { z } from 'zod';
 
 export class CreateEventHandler extends BaseToolHandler {
@@ -34,8 +34,9 @@ export class CreateEventHandler extends BaseToolHandler {
                 reminders: args.reminders,
                 recurrence: args.recurrence,
             };
+            const resolvedCalendarId = await this.resolveCalendarIdentifier(args.calendarId, client);
             const response = await calendar.events.insert({
-                calendarId: args.calendarId,
+                calendarId: resolvedCalendarId,
                 requestBody: requestBody,
             });
             if (!response.data) throw new Error('Failed to create event, no data returned');

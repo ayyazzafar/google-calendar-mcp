@@ -22,8 +22,9 @@ export class DeleteEventHandler extends BaseToolHandler {
     ): Promise<void> {
         try {
             const calendar = this.getCalendar(client);
+            const resolvedCalendarId = await this.resolveCalendarIdentifier(args.calendarId, client);
             await calendar.events.delete({
-                calendarId: args.calendarId,
+                calendarId: resolvedCalendarId,
                 eventId: args.eventId,
             });
         } catch (error) {

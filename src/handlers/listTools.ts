@@ -1,5 +1,3 @@
-import { ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
-
 // Extracted reminder properties definition for reusability
 const remindersInputProperty = {
     type: "object",
@@ -53,7 +51,7 @@ export function getToolDefinitions() {
           properties: {
             calendarId: {
               type: "string",
-              description: "ID of the calendar to list events from (use 'primary' for the main calendar)",
+              description: "Calendar name or ID (e.g., 'Work', 'Personal', 'primary', or email address). Defaults to GOOGLE_CALENDAR_ID env var or 'primary'",
             },
             timeMin: {
               type: "string",
@@ -66,7 +64,7 @@ export function getToolDefinitions() {
               description: "End time in ISO format with timezone required (e.g., 2024-12-31T23:59:59Z or 2024-12-31T23:59:59+00:00). Date-time must end with Z (UTC) or +/-HH:MM offset.",
             },
           },
-          required: ["calendarId"],
+          required: [],
         },
       },
       {
@@ -77,7 +75,7 @@ export function getToolDefinitions() {
           properties: {
             calendarId: {
               type: "string",
-              description: "ID of the calendar to search events in (use 'primary' for the main calendar)",
+              description: "Calendar name or ID (e.g., 'Work', 'Personal', 'primary', or email address). Defaults to GOOGLE_CALENDAR_ID env var or 'primary'",
             },
             query: {
               type: "string",
@@ -94,7 +92,7 @@ export function getToolDefinitions() {
               description: "End time boundary in ISO format with timezone required (e.g., 2024-12-31T23:59:59Z or 2024-12-31T23:59:59+00:00). Date-time must end with Z (UTC) or +/-HH:MM offset.",
             },
           },
-          required: ["calendarId", "query"],
+          required: ["query"],
         },
       },
       {
@@ -114,7 +112,7 @@ export function getToolDefinitions() {
           properties: {
             calendarId: {
               type: "string",
-              description: "ID of the calendar to create the event in (use 'primary' for the main calendar)",
+              description: "Calendar name or ID (e.g., 'Work', 'Personal', 'primary', or email address). Defaults to GOOGLE_CALENDAR_ID env var or 'primary'",
             },
             summary: {
               type: "string",
@@ -172,7 +170,7 @@ export function getToolDefinitions() {
               }
             },
           },
-          required: ["calendarId", "summary", "start", "end", "timeZone"],
+          required: ["summary", "start", "end", "timeZone"],
         },
       },
       {
@@ -183,7 +181,7 @@ export function getToolDefinitions() {
           properties: {
             calendarId: {
               type: "string",
-              description: "ID of the calendar containing the event",
+              description: "Calendar name or ID containing the event (e.g., 'Work', 'Personal', 'primary', or email address). Defaults to GOOGLE_CALENDAR_ID env var or 'primary'",
             },
             eventId: {
               type: "string",
@@ -248,7 +246,7 @@ export function getToolDefinitions() {
               }
             },
           },
-          required: ["calendarId", "eventId", "timeZone"], // timeZone is technically required for PATCH
+          required: ["eventId", "timeZone"], // timeZone is technically required for PATCH
         },
       },
       {
@@ -259,14 +257,14 @@ export function getToolDefinitions() {
           properties: {
             calendarId: {
               type: "string",
-              description: "ID of the calendar containing the event",
+              description: "Calendar name or ID containing the event (e.g., 'Work', 'Personal', 'primary', or email address). Defaults to GOOGLE_CALENDAR_ID env var or 'primary'",
             },
             eventId: {
               type: "string",
               description: "ID of the event to delete",
             },
           },
-          required: ["calendarId", "eventId"],
+          required: ["eventId"],
         },
       },
       {

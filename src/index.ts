@@ -75,6 +75,27 @@ async function main() {
     process.on("SIGTERM", cleanup);
 
   } catch (error: unknown) {
+    console.error('=== GOOGLE CALENDAR MCP SERVER INITIALIZATION ERROR ===');
+    if (error instanceof Error) {
+      console.error('Error:', error.message);
+      
+      // Provide specific guidance for common errors
+      if (error.message.includes('OAuth keys file not found')) {
+        console.error('\nSETUP REQUIRED:');
+        console.error('1. Copy the example file: cp gcp-oauth.keys.example.json gcp-oauth.keys.json');
+        console.error('2. Add your Google OAuth credentials to gcp-oauth.keys.json');
+        console.error('3. See README.md for detailed setup instructions');
+      } else if (error.message.includes('OAuth keys file is missing')) {
+        console.error('\nINVALID OAUTH FILE:');
+        console.error('Your gcp-oauth.keys.json file appears to be invalid.');
+        console.error('Please ensure it contains valid OAuth 2.0 credentials from Google Cloud Console.');
+      }
+      
+      console.error('\nFull error details:', error.stack);
+    } else {
+      console.error('Unknown error:', error);
+    }
+    console.error('==============================================');
     process.exit(1);
   }
 }
@@ -99,7 +120,8 @@ export { main, server };
 // Run main() only when this script is executed directly
 const isDirectRun = import.meta.url.startsWith('file://') && process.argv[1] === fileURLToPath(import.meta.url);
 if (isDirectRun) {
-  main().catch(() => {
+  main().catch((error) => {
+    console.error('Unhandled error in main:', error);
     process.exit(1);
   });
 }

@@ -114,9 +114,16 @@ export class AuthServer {
   }
 
   async start(openBrowser = true): Promise<boolean> {
-    if (await this.tokenManager.validateTokens()) {
-      this.authCompletedSuccessfully = true;
-      return true;
+    try {
+      if (await this.tokenManager.validateTokens()) {
+        // Tokens are valid, skipping auth flow
+        this.authCompletedSuccessfully = true;
+        return true;
+      }
+      // Tokens invalid or missing, starting auth flow
+    } catch (error) {
+      // Error validating tokens, will start auth flow
+      // Continue with auth flow
     }
     
     // Try to start the server and get the port
@@ -128,13 +135,16 @@ export class AuthServer {
 
     // Successfully started server on `port`. Now create the flow-specific OAuth client.
     try {
+      // Loading OAuth credentials...
       const { client_id, client_secret } = await loadCredentials();
       this.flowOAuth2Client = new OAuth2Client(
         client_id,
         client_secret,
         `http://localhost:${port}/oauth2callback`
       );
+      // OAuth client created successfully
     } catch (error) {
+        // Failed to load credentials
         // Could not load credentials, cannot proceed with auth flow
         this.authCompletedSuccessfully = false;
         await this.stop(); // Stop the server we just started

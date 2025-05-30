@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { DEFAULT_CALENDAR_ID } from '../config.js';
 
 // Zod schemas for input validation
 
@@ -16,7 +17,7 @@ export const RemindersSchema = z.object({
 const isoDateTimeWithTimezone = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(Z|[+-]\d{2}:\d{2})$/;
 
 export const ListEventsArgumentsSchema = z.object({
-  calendarId: z.string(),
+  calendarId: z.string().default(DEFAULT_CALENDAR_ID),
   timeMin: z.string()
     .regex(isoDateTimeWithTimezone, "Must be ISO format with timezone (e.g., 2024-01-01T00:00:00Z)")
     .optional(),
@@ -26,7 +27,7 @@ export const ListEventsArgumentsSchema = z.object({
 });
 
 export const SearchEventsArgumentsSchema = z.object({
-  calendarId: z.string(),
+  calendarId: z.string().default(DEFAULT_CALENDAR_ID),
   query: z.string(),
   timeMin: z.string()
     .regex(isoDateTimeWithTimezone, "Must be ISO format with timezone (e.g., 2024-01-01T00:00:00Z)")
@@ -37,7 +38,7 @@ export const SearchEventsArgumentsSchema = z.object({
 });
 
 export const CreateEventArgumentsSchema = z.object({
-  calendarId: z.string(),
+  calendarId: z.string().default(DEFAULT_CALENDAR_ID),
   summary: z.string(),
   description: z.string().optional(),
   start: z.string().regex(isoDateTimeWithTimezone, "Must be ISO format with timezone (e.g., 2024-01-01T00:00:00Z)"),
@@ -57,7 +58,7 @@ export const CreateEventArgumentsSchema = z.object({
 });
 
 export const UpdateEventArgumentsSchema = z.object({
-  calendarId: z.string(),
+  calendarId: z.string().default(DEFAULT_CALENDAR_ID),
   eventId: z.string(),
   summary: z.string().optional(),
   description: z.string().optional(),
@@ -82,7 +83,7 @@ export const UpdateEventArgumentsSchema = z.object({
 });
 
 export const DeleteEventArgumentsSchema = z.object({
-  calendarId: z.string(),
+  calendarId: z.string().default(DEFAULT_CALENDAR_ID),
   eventId: z.string(),
 });
 

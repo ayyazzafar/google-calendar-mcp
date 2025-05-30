@@ -24,8 +24,9 @@ export class SearchEventsHandler extends BaseToolHandler {
     ): Promise<calendar_v3.Schema$Event[]> {
         try {
             const calendar = this.getCalendar(client);
+            const resolvedCalendarId = await this.resolveCalendarIdentifier(args.calendarId, client);
             const response = await calendar.events.list({
-                calendarId: args.calendarId,
+                calendarId: resolvedCalendarId,
                 q: args.query,
                 timeMin: args.timeMin,
                 timeMax: args.timeMax,
