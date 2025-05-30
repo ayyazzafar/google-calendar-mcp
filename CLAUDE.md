@@ -65,3 +65,29 @@ To add a new calendar tool:
 ### Testing
 
 Tests use Vitest and follow the pattern `*.test.ts`. The test suite includes unit tests for handlers and integration tests for the MCP server.
+
+## Troubleshooting
+
+### Node.js Compatibility
+
+This project requires Node.js 18 or higher due to ES module support. The `start.sh` script includes automatic version checking.
+
+If you encounter errors like:
+- `SyntaxError: Unexpected token {`
+- `SyntaxError: Unexpected token '.'` (optional chaining)
+- Import statement errors
+
+These indicate an older Node.js version is being used. To fix:
+
+1. Check your Node.js version: `node --version`
+2. If using Claude Desktop and it's using an older Node.js, set `NODE_PATH` in `.env`:
+   ```bash
+   NODE_PATH=/path/to/node18+/bin/node
+   ```
+3. The start.sh script will use this path and verify compatibility
+
+### Common Issues
+
+1. **Authentication tokens not found**: Run `npm run auth` to set up OAuth2
+2. **Build errors**: Ensure all dependencies are installed with `npm install`
+3. **Token expiration**: Google test apps expire tokens after 7 days, re-auth when needed

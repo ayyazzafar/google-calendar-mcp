@@ -34,7 +34,7 @@ Along with the normal capabilities you would expect for a calendar integration y
 
 ## Requirements
 
-1. Node.js (Latest LTS recommended)
+1. Node.js 18 or higher (Latest LTS recommended)
 2. TypeScript 5.3 or higher
 3. A Google Cloud project with the Calendar API enabled
 4. OAuth 2.0 credentials (Client ID and Client Secret)
@@ -94,6 +94,19 @@ The server intelligently resolves calendar identifiers, so you can use:
    ```
 
 To find your calendar IDs, use the `list-calendars` tool after authentication.
+
+### Node.js Path Configuration
+
+If Claude Desktop uses an incompatible Node.js version, you can specify a custom Node.js path:
+
+1. Edit `.env` and set the Node.js binary path:
+   ```bash
+   NODE_PATH=/usr/local/bin/node
+   # or for nvm users:
+   NODE_PATH=/Users/username/.nvm/versions/node/v22.11.0/bin/node
+   ```
+
+2. The `start.sh` script will use this path instead of the system Node.js
 
 ## Available Scripts
 
@@ -203,8 +216,14 @@ Tests mock external dependencies (Google API, filesystem) to ensure isolated tes
 
 3. **Build Errors:**
    - Run `npm install` again.
-   - Check Node.js version (use LTS).
+   - Check Node.js version (must be 18 or higher).
    - Delete the `build/` directory and run `npm run build`.
+
+4. **Node.js Compatibility Issues:**
+   - The server requires Node.js 18 or higher due to ES module support.
+   - If Claude Desktop shows errors like "Unexpected token {" or "import statement errors", it's using an older Node.js version.
+   - Solution: Set `NODE_PATH` in your `.env` file to point to a compatible Node.js installation.
+   - The `start.sh` script will automatically check the Node.js version and provide helpful error messages.
 
 if you are a developer want to contribute this repository, please kindly take a look at [Architecture Overview](docs/architecture.md) before contributing
 
