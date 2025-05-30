@@ -72,6 +72,7 @@ Along with the normal capabilities you would expect for a calendar integration y
 - `npm run build` - Build the TypeScript code (compiles `src` to `build`)
 - `npm run typecheck` - Run TypeScript type checking without compiling
 - `npm run start` - Start the compiled MCP server (using `node build/index.js`)
+- `./start.sh` - Alternative way to start the server with environment variables from `.env` file
 - `npm run auth` - Manually run the Google OAuth authentication flow.
 - `npm test` - Run the unit/integration test suite using Vitest
 - `npm run test:watch` - Run tests in watch mode
@@ -141,6 +142,18 @@ Tests mock external dependencies (Google API, filesystem) to ensure isolated tes
      }
    }
    ```
+   
+   Alternatively, if you need to use environment variables:
+   ```json
+   {
+     "mcpServers": {
+       "google-calendar": {
+         "command": "<absolute-path-to-project-folder>/start.sh"
+       }
+     }
+   }
+   ```
+   
    Note: Replace `<absolute-path-to-project-folder>` with the actual path to your project directory.
 
 2. Restart Claude Desktop
