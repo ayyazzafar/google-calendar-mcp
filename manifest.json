@@ -1,0 +1,59 @@
+{
+  "dxt_version": "0.1",
+  "name": "google-calendar-mcp",
+  "version": "1.1.3",
+  "description": "Google Calendar MCP Server",
+  "author": {
+    "name": "Ayyaz"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "build/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/build/index.js"],
+      "env": {
+        "GOOGLE_CLIENT_ID": "${user_config.GOOGLE_CLIENT_ID}",
+        "GOOGLE_CLIENT_SECRET": "${user_config.GOOGLE_CLIENT_SECRET}",
+        "GOOGLE_REDIRECT_URI": "${user_config.GOOGLE_REDIRECT_URI}",
+        "GOOGLE_REFRESH_TOKEN": "${user_config.GOOGLE_REFRESH_TOKEN}"
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "All"
+    }
+  ],
+  "user_config": {
+    "GOOGLE_CLIENT_ID": {
+      "type": "string",
+      "title": "GOOGLE_CLIENT_ID",
+      "description": "GOOGLE_CLIENT_ID",
+      "required": true,
+      "sensitive": false
+    },
+    "GOOGLE_CLIENT_SECRET": {
+      "type": "string",
+      "title": "GOOGLE_CLIENT_SECRET",
+      "description": "GOOGLE_CLIENT_SECRET",
+      "required": true,
+      "sensitive": false
+    },
+    "GOOGLE_REDIRECT_URI": {
+      "type": "string",
+      "title": "GOOGLE_REDIRECT_URI",
+      "description": "GOOGLE_REDIRECT_URI",
+      "required": true,
+      "sensitive": false
+    },
+    "GOOGLE_REFRESH_TOKEN": {
+      "type": "string",
+      "title": "GOOGLE_REFRESH_TOKEN",
+      "description": "GOOGLE_REFRESH_TOKEN",
+      "required": true,
+      "sensitive": false
+    }
+  },
+  "license": "MIT"
+}
